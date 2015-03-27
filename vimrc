@@ -143,7 +143,7 @@ let g:syntastic_check_on_wq = 0
 
 " Sintaxi per php
 let g:php_syntax_extensions_enabled = 1
-set g:phpcomplete_index_composer_command = composer
+let g:phpcomplete_index_composer_command = 'composer'
 
 function! PhpSyntaxOverride()
   hi! def link phpDocTags  phpDefine
