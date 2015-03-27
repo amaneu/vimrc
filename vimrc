@@ -3,8 +3,8 @@ set nocompatible
 filetype off
 
 "Mapear la tecla <ESC> a jj al mode insert
-imap jj <Esc>
-map <C-n> :NERDTreeToggle<CR>
+"imap jj <Esc>
+"map <C-n> :NERDTreeToggle<CR>
 
 " Mapejar els tabs al mode normal
 map ,t :tabnew
@@ -107,6 +107,8 @@ colorscheme Monokai
 
 " Ressalta la línia a on es troba el cursor
 " set cursorline
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+let g:ctrlp_map = '<c-p>'
 
 " Pathogen - Per gestionar els plugins de vim
 execute pathogen#infect()
@@ -125,7 +127,33 @@ endif
 au BufWinLeave *.* mkview
 au BufWinEnter *.* silent loadview
 
-
+" Sintaxi per python
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_python_checker_args='--ignore=E501'
+let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
+" Sintaxi generica
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Sintaxi per php
+let g:php_syntax_extensions_enabled = 1
+set g:phpcomplete_index_composer_command = composer
+
+function! PhpSyntaxOverride()
+  hi! def link phpDocTags  phpDefine
+  hi! def link phpDocParam phpType
+endfunction
+
+augroup phpSyntaxOverride
+  autocmd!
+  autocmd FileType php call PhpSyntaxOverride()
+augroup END
+
+" Autocomplete per php
+autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
